@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Controller index
+{% endblock %}
+
+
+{% block body %}
+	{#<a href="{{path('app_annouce')}}">Annoce</a>#}
+
+	<div class="container mt-5">
+		{# Container debut #}
+		{# Jumbotron #}
+			<div class="jumbotron"> <h1 class="display-3">Hello, world!</h1>
+			<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+			<hr class="my-4">
+			<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+			<p class="lead">
+				<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+			</p>
+		</div>
+		{# Fin Jumbotron #}
+		<h2 class="my-5">Les dernieres annonces...</h2>
+		<div
+			class="row">
+			{# card bigin #}
+			{% for announce in announces %}
+				<div class="col-md-4">
+					<div class="card mb-3">
+						<p class="card-header text-center">{{ announce.rooms }}
+							Chambres à
+							{{ announce.price }}
+							/ mois
+							<br>
+							{{ announce.comments | length }} commentaires</p>
+						<img src="{{ announce.coverImage }}" style="height:150px; width:100%;" alt="img">
+						<div class="card-body">
+							<p class="card-text">{{ announce.introduction }}</p>
+						</div>
+						<div class="card-body">
+							<a href="{{path('app_announce_show', {id: announce.id})}}" class="card-link btn btn-primary">Détails...</a>
+						</div>
+						<div class="card-footer text-muted text-center">
+							<i class="fas fa-map-marker-alt"></i>
+							<small>{{ announce.address }}</small> <br>
+							<small>{{ announce.createdAt | date("d-m-y") }}</small>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			{# card end #}
+		</div>
+	</div>
+	{# container end #}
+
+
+{% endblock %}
