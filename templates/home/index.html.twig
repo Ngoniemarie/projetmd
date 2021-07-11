@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonce
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container my-5">
+        <H1>
+            <ta-center>Mes annonces</ta-center>
+        </H1><br/><br/>
+
+        <div class="row ">
+            {% for announce in announces %}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <h5 class="card-header">
+                            <p class="card-header text-center"></p>
+                            {% if announce.rooms < 2 %}Une chambre
+                            {% else %}
+                                {{announce.rooms}}
+                                Chambres
+                            {% endif %}
+                            à
+                            {{announce.price | number_format(0, ',', ' ')}}
+                            /mois
+                            <br/>
+                            <small>{{announce.comments |length }}
+                                commentaires</small>
+                        </p>
+
+                        <img src="{{asset('uploads/coverImage/' ~ announce.coverImage )}}" alt="image" style="height:300; width:100%;">
+
+
+                        <div class="card-body">
+
+
+                            <h5>{{announce.title}}</h5>
+                            <strong>
+
+                                <p class="card-text">{{announce.introduction |u.truncate(100, '...')}}</p>
+                            </strong>
+                        </p>
+
+                    </div>
+
+                    <p class="card-text">{{announce.Desription}}</p>
+
+                    <div class="card-body">
+                        <a href="{{ path('annonce', {'slug':announce.slug}) }}" class="card-link btn btn-primary">Détails...</a>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        <i class="fas fa-map-marker">
+                            {{announce.address}}
+                        </i>
+                        <br>
+                        <small>{{announce.createdAt |ago(locale='fr')}}</small>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>{% endblock %}

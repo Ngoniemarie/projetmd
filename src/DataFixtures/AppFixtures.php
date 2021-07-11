@@ -28,11 +28,12 @@ class AppFixtures extends Fixture
          $announce = new Announce();
          $announce->setTitle($faker->sentence(3, false));
          $announce->setSlug($slugger->slugify($announce->getTitle()));
-         $announce->setIntroduction($faker->text(200));
-         $announce->setDescription($faker->text(800));
+         $announce->setIntroduction($faker->text(400));
+         $announce->setDescription($faker->text(900));
          $announce->setPrice(mt_rand(30000,60000));
          $announce->setAddress($faker->address(3));
-         $announce->setcoverImage("https://picsum.photos/1200/300?random=". mt_rand(1, 5000));
+       //$announce->setcoverImage("https://picsum.photos/1200/300?random=". mt_rand(1, 5000));
+         $announce->setcoverImage("45523e9976547b8dca10e94d6127c0e1.jpg");
          $announce->setRooms(mt_rand(1,5));
          $announce->setIsAvailable(mt_rand(0,1));
          $announce->setCreatedAt($faker->dateTimeBetween('-3 month','now'));

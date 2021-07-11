@@ -5,27 +5,105 @@
 {% block body %}
 
 
-	<div class="container my-5">
+	<div
+		class="">
 
-		<div class="container py-5 text-center" style="background-image: url({{ announce.coverImage }}); color:white; height:400px;">
-    
-      <h6>{{ announce.title }}</h6> <br>
-      <p>{{ announce.rooms }} chambres à {{ announce.price}}</p> <br>
-      <p>{{ announce.introduction }}</p>
+		{#<div class="container py-5 text-center" style="background-image: url({{ annonce.coverImage }}); color:white; height:400px;">#}
+		<div class="container py-5 text-center" style="background-image: url('/uploads/coverImages/d0a9d5a90ec0395e21f67517fa578e88.png'); color:white; height:400px;">
 
-    </div>
-    <div class="container">
-                <p>{{ announce.description }}</p>
 
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8">Commentaires</div>
-        <div class="col">Auteurs</div>
-      </div>
-    </div>
+			<h6>{{ annonce.title }}</h6>
+			<br>
+			<p>{{ annonce.rooms }}
+				chambres à
+				{{ annonce.price}}</p>
+			<br>
+			<p>{{ annonce.introduction }}</p>
 
+
+		</div>
+		<div class="container">
+			<p>{{ annonce.description }}</p>
+
+		</div>
+		<div class="container my-5">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="text-center">
+						<strong>Commentaire</strong>
+					</h5>
+				</div>
+				{% for comment in annonce.comments %}
+					{% if comment| length > 0 %}
+						<div class="row">
+							<div class="col-12 col-md-12 col-lg-12">
+								<div class="alert alert-success" role="alert">
+									<h6>
+										{{comment.author}}
+										<u></u>
+										{{comment.email}}
+									</h6>
+									<p>{{comment.content}}</p>
+									{#<p>edité le
+																																			k		{{ comment.createdAt|date("Y-m-d H:i:s") }}</p>#}
+									<p>{{comment.createdAt |ago(locale='fr')}}</p>
+
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+
+				<div></div>
+				{#</div>
+														</div>}#
+														{#<div class="container my-5">
+															<div class="card">
+																<div class="card-header">
+																	<h5 class="text-center">
+																		<strong>Auteur</strong>
+																	</h5>
+																</div>}#}
+				{#<div class="col-12 col-md-12 col-lg-12">
+																	<div class="alert  alert-info">
+																		<p class="card text">Name: Penda LY</p>
+																		<br>
+																		<p class="card text">Email: penda@gmail.com</p>
+																		<p class="card text">Address: Parcelles Assainies Dakar-Senegal</p>
+																	</div>#}
+
+				<div></div>
+				<div class="card-body">
+					<h6 class="text-uppercase mb-4 font-weight-bold">Auteur</h6>
+					<p>
+						<i class="fas fa-name mr-3"></i>Name:Penda</p>
+					<p></p>
+					<i class="fas fa-home mr-3"></i>Dakar, Senegal,Parcelles Assainies
+					<p></p>
+					<i class="fas fa-envelope mr-3"></i>penda@gmail.com
+				</p>
+			</div>
+		</div>
 	</div>
 
+	<div class="container  mt-5">
+	<div class="row justify-content-start mt-5">
 
+		<div class="row">
+			<div class="col-12 col-md-8 col-lg-6 mx-auto">
+				{{ form_start(form) }}
+				{{ form_row(form.Author, {'attr': {'placeholder': "nom de l'auteur"}})}}
+				{{ form_row(form.email, {'attr': {'placeholder': "email de l'auteur"}})}}
+				{{ form_row(form.content, {'attr': {'placeholder': "contenue de l'auteur"}})}}
+
+
+				<button class="btn btn-primary" , type="submit">Sauvegarder</button>
+
+				{{ form_end(form) }}
+			</div>
+
+		</div>
+
+
+	</div>
 {% endblock %}

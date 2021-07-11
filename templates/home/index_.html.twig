@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gérer les biens' %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Gestion des annonces</h1>
+		<table class="table table-striped  ">
+			<thead>
+				<tr>
+					<th>Titre</th>
+					<th>Prix</th>
+                    <th>Adresse</th>
+					<th>Disponibilité</th>
+					<th>Actions</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				{% for announce in annonces %}
+
+
+					<tr>
+						<td>{{ announce.title }}</td>
+						<td>{{ announce.price }}</td>
+						<td>{{ announce.address }}</td>
+						{% if announce.isAvailable == true %}
+						<td><i class="fas fa-toggle-on"></i></td>
+						{% else %}
+						<td><i class="fas fa-toggle-off"></i></td>
+						{% endif %}
+			
+			<td><a href="{{ path('app_announce_edit', {slug: announce.slug}) }}" class="btn btn-secondary">
+			<i class="fas fa-edit"></i> </a>
+			<a href="{{ path('app_announce_delete', {slug: announce.slug}) }}" class="btn btn-dander" 
+			onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')" >
+			<i class="fas fa-trash-alt"></i></a>
+
+
+                           {# <strong class="bi bi-pencil-square">edite</strong></a>
+							<a href="{{ path('app_announce_delete', {slug: announce.slug}) }}" 
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')" >
+                            <strong class="bi bi-trash-fill">delete</strong></a>#}
+
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+			</div>
+		</div>
+	</div>
+{% endblock %}

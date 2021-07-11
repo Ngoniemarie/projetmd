@@ -3,12 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\AnnounceRepository;
+use Cocur\Slugify\Slugify;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=AnnounceRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Announce
 {
@@ -65,12 +71,12 @@ class Announce
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="announce")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="announce",cascade={"remove"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="announce")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="announce",cascade={"remove"})
      */
     private $images;
 
@@ -83,6 +89,16 @@ class Announce
     {
         $this->comments = new ArrayCollection();
         $this->images = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initSlug()
+    {
+        $slugger = new Slugify();
+        return $this->slug = $slugger->slugify($this->title);
     }
 
     public function getId(): ?int
@@ -102,6 +118,8 @@ class Announce
         return $this;
     }
 
+
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -111,7 +129,7 @@ class Announce
     {
         $this->slug = $slug;
 
-        return $this;
+       return $this;
     }
 
     public function getDescription(): ?string
@@ -186,16 +204,19 @@ class Announce
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -269,6 +290,4 @@ class Announce
 
         return $this;
     }
-
-
 }
